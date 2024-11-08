@@ -1,0 +1,11 @@
+server:
+  port: 24903
+
+spring:
+  jackson:
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  profiles:
+    active: TEST
+  application:
+    name: demo-test-es
