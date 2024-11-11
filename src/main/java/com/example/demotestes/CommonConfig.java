@@ -16,9 +16,9 @@ public class CommonConfig implements DisposableBean {
     @Autowired
     ElasticsearchClient elasticsearchClient;
 
-	// TODO 注释掉则端口冲突无法退出
+	// TODO  If commented out, the process did not exit when there was a port conflict
     @Override
     public void destroy() throws Exception {
-        elasticsearchClient._transport().close();
+//        elasticsearchClient._transport().close();
     }
 }
