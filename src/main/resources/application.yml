@@ -12,5 +12,5 @@ spring:
   elasticsearch:
     uris: 127.0.0.1:9200
     username: elastic
-    password: elastic
+    password: k4s9kJmT1ErmsVLRGE5K
     socket-timeout: 3000
