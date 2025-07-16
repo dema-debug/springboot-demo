@@ -18,19 +18,31 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
 
 @SpringBootApplication
+@EnableScheduling
 public class DemoTestEsApplication {
 
     @Autowired
     ElasticsearchProperties property;
 
     public static void main(String[] args) {
+        String excelFilePath = "D://test.xlsx"; // 输入Excel文件路径
+        String markdownFilePath = "D://output.md"; // 输出Markdown文件路径
+
+        try {
+            Excel2Markdown.convertExcelToMarkdown(excelFilePath, markdownFilePath);
+            System.out.println("转换完成！Markdown文件已保存到: " + markdownFilePath);
+        } catch (IOException e) {
+            System.err.println("转换过程中发生错误: " + e.getMessage());
+        }
         SpringApplication.run(DemoTestEsApplication.class, args);
     }
 

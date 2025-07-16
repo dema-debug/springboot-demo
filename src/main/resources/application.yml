@@ -14,3 +14,7 @@ spring:
     username: elastic
     password: elastic
     socket-timeout: 3000
+
+my:
+  cron:
+    value: 0/1 * * * * ?
