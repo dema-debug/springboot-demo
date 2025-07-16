@@ -52,13 +52,13 @@ public class DemoTestEsApplication {
      * @return {@link ElasticsearchClient}
      */
     @Bean
-    public ElasticsearchClient esClient() {
-        return this.getElasticsearchClient(property);
+    public ElasticsearchClient esClient(RestClient restClient) {
+        ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
+        return new ElasticsearchClient(transport);
     }
 
-    // ---------------private method------------------------------------------------------------------------
-
-    private ElasticsearchClient getElasticsearchClient(ElasticsearchProperties properties) {
+    @Bean
+    public RestClient restClient(ElasticsearchProperties properties) {
         HttpHost[] hosts = properties.getUris().stream().map(this::createHttpHost).toArray(HttpHost[]::new);
         RestClientBuilder restClient = RestClient.builder(hosts);
         PropertyMapper map = PropertyMapper.get();
@@ -77,10 +77,10 @@ public class DemoTestEsApplication {
                     .to(requestConfigBuilder::setSocketTimeout);
             return requestConfigBuilder;
         });
-
-        ElasticsearchTransport transport = new RestClientTransport(restClient.build(), new JacksonJsonpMapper());
-        return new ElasticsearchClient(transport);
+        return restClient.build();
     }
+
+    // ---------------private method------------------------------------------------------------------------
 
     private HttpHost createHttpHost(String uri) {
         try {
